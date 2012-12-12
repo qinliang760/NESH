@@ -57,14 +57,15 @@ case flash
 				})				
 			},
 			autoWin:function(){
-				var winW=$(window).width();
+				var winW=$(window).width();				
 				var objW=obj.width();
 				var objPW=obj.parent().width();
+				var winLeave=(winW-objPW)/2;
 				var dir=defaults.autoDir;
 				
 
-				if(objPW+objW > winW){
-					var space=-(200-(objPW+objW-winW));
+				if(objW > winLeave){
+					var space=-(objW-(objW-winLeave));
 					obj.css(dir,space+"px");	
 				}
 			},
