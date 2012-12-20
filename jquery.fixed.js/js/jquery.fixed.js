@@ -26,52 +26,72 @@ case flash
 (function($) {
 	var fixed = {
 		defaults: {
-			autoWin:true,//自适应屏幕
-			autoDir:"right",
-			easing:true,//是否要动画过渡
-			hide:true//到可视范围隐藏
-			
+			autoWin: true,
+			//自适应屏幕
+			autoDir: "right",
+			easing: false,
+			//是否要动画过渡
+			autoHide: true //到可视范围隐藏
 		}
-	};
-	function Fixed(root,defaults) {
+	}
+	function Fixed(root, defaults) {
 		var self = this,
-			obj=root;
+		obj = root;
 
 		$.extend(this, {
 			startFixed: function() {
-				var top=parseInt(obj.css("top"));
-				
-				$(window).scroll(function(){
-					var topScroll=parseInt($(document).scrollTop());
-/*					goTop.show();
+				var top = parseInt(obj.css("top"));
+
+				$(window).scroll(function() {
+					var topScroll = parseInt($(document).scrollTop());
+					if (defaults.autoHide) {
+
+						var objTop = parseInt(obj.offset().top);
+						var winH = $(window).height();
+						if (objTop < winH) {
+							obj.hide();
+						} else {
+							obj.show();
+						}
+					}
+
+					/*					goTop.show();
 					if(goTop.offset().top<1100){
 						goTop.hide();
 					}
 					var topScroll=$(document).scrollTop();*/
-					if(defaults.easing){
-						setTimeout(function(){obj.stop(true,true).animate({"top":top+topScroll},500)},100);	
-					}else{
-						obj.css("top",top+topScroll+"px");
+					if (defaults.easing) {
+						setTimeout(function() {
+							obj.stop(true, true).animate({
+								"top": top + topScroll
+							},
+							500)
+						},
+						100);
+					} else {
+						obj.css("top", top + topScroll + "px");
 					}
-					
-				})				
-			},
-			autoWin:function(){
-				var winW=$(window).width();				
-				var objW=obj.width();
-				var objPW=obj.parent().width();
-				var winLeave=(winW-objPW)/2;
-				var dir=defaults.autoDir;
-				
 
-				if(objW > winLeave){
-					var space=-(objW-(objW-winLeave));
-					obj.css(dir,space+"px");	
+				})
+				$(window).resize(function() {
+					defaults.autoWin ? self.autoWin() : "";
+				})
+			},
+			autoWin: function() {
+				var winW = $(window).width();
+				var objW = obj.width();
+				var objPW = obj.parent().width();
+				var winLeave = (winW - objPW) / 2;
+				var dir = defaults.autoDir;
+
+				if (objW > winLeave) {
+					var space = - (objW - (objW - winLeave));
+					obj.css(dir, space + "px");
 				}
 			},
 			init: function() {
 				self.startFixed();
-				defaults.autoWin?self.autoWin():"";
+				defaults.autoWin ? self.autoWin() : "";
 			}
 		})
 		self.init();
