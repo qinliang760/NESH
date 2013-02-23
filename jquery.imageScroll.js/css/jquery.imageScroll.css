@@ -1,0 +1,48 @@
+*,html,body{
+	margin:0;
+	padding:0;
+}
+ul{
+	list-style:none;
+}
+img{
+	border:none;
+}
+.f-cb:after{
+	content:".";
+	clear:both;
+	display:block;
+	visibility:hidden;
+	height:0;
+}
+.f-cb{
+	display:inline-block;/* for IE/Mac */
+}
+* html .f-cb{/* triggers hasLayout */
+	height:1%;
+}
+.f-cb{
+	display:block;/* resets display for IE/Win */
+}
+body{
+	font-size:12px;	
+}
+#imgBox a{
+	float:left;
+	width:50px;
+}
+#imgRange{
+	position:relative;
+	width:840px;
+	float:left;
+	overflow:hidden;
+}
+#imgRange ul{
+	width:5000px;
+}
+#imgRange ul li{
+	float:left;
+	display:inline;
+	width:200px;
+	margin-right:10px;
+}
